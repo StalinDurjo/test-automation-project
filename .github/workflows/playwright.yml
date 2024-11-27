@@ -28,4 +28,4 @@ jobs:
     - name: Install wp-env
       run: npm -g i @wordpress/env
     - name: Create WordPress Environment
-      run : cd wp-instance && npm run wp-env
+      run : cd wp-instance && wp-env start
