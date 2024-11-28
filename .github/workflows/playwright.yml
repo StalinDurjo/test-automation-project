@@ -29,3 +29,5 @@ jobs:
       run: npm -g i @wordpress/env
     - name: Create WordPress Environment
       run : cd wp-instance && wp-env start
+    - name: List Content
+      run: wp-env run tests-wordpress ls
