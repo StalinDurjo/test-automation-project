@@ -30,4 +30,4 @@ jobs:
     - name: Create WordPress Environment
       run : cd wp-instance && wp-env start
     - name: List Content
-      run: cd wp-instance && wp-env run tests-wordpress ls
+      run: cd wp-instance && wp-env run tests-wordpress cd wp-content/plugins && ls
