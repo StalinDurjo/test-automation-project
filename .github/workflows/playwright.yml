@@ -32,4 +32,4 @@ jobs:
     - name: Run Bash
       run: cd wp-instance && wp-env run tests-wordpress bash
     - name: List 
-      run: cd wp-content && ls
+      run: ls
