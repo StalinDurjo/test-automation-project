@@ -1,7 +1,7 @@
 import { Page } from "@playwright/test";
 import BasePage from "../common/base.page";
 
-export default class LoginPage extends BasePage {
+export default class AdminLoginPage extends BasePage {
   constructor(page: Page) {
     super(page);
     this.url = "/wp-login.php";

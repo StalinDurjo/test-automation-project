@@ -37,7 +37,7 @@ export default class WordPressPageActions extends BasePage {
   }
 
   async setPermalinksStructure(structure: PermalinkStructure["structure"], customStructure: string = "") {
-    // await this.page.goto("/wp-admin/options-permalink.php");
+    await this.page.goto("/wp-admin/options-permalink.php");
 
     switch (structure) {
       case "Plain":

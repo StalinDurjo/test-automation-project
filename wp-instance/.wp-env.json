@@ -13,9 +13,7 @@
         "WP_DEBUG_DISPLAY": "true"
       },
       "mappings": {
-        ".htaccess": ".htaccess",
-        "wp-data": "./wp-data",
-        "wp-content/debug.log": "./wp-data/debug.log"
+        ".htaccess": ".htaccess"
       }
     }
   }

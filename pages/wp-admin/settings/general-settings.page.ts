@@ -10,4 +10,12 @@ export default class GeneralSettingsPage extends BasePage {
   membershipCheckbox() {
     return this.page.getByRole("checkbox").and(this.page.locator("#users_can_register"));
   }
+
+  async enterAddressLine1(address1: string) {
+    await this.page.locator("#woocommerce_store_address").fill(address1);
+  }
+
+  async enterCity(city: string) {
+    await this.page.locator("#woocommerce_store_city").fill(city);
+  }
 }

@@ -3,13 +3,18 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "npx playwright test",
+    "test:ui": "npx playwright test --ui",
+    "wp-env": "wp-env"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@playwright/test": "^1.48.2",
-    "@types/node": "^22.9.0"
+    "@playwright/test": "^1.49.0",
+    "@types/node": "^22.9.0",
+    "@wordpress/env": "^10.13.0"
   },
   "dependencies": {
     "dotenv": "^16.4.5"

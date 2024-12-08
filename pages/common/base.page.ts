@@ -10,21 +10,11 @@ export default class BasePage {
     this.url = "/";
   }
 
-  //   setBaseUrl(baseUrl: string) {
-  //     this.baseUrl = baseUrl;
-  //     // this.url = this.baseUrl + this.url;
-  //   }
-
-  //   async goto(url: string = "") {
-  //     if (url) {
-  //       await this.page.goto(url);
-  //     } else {
-  //       await this.page.goto(this.url);
-  //     }
-  //   }
-
-  async goto() {
-    // console.log(this.baseUrl);
-    await this.page.goto(this.url);
+  async goto(url: string = "") {
+    if (url) {
+      await this.page.goto(url);
+    } else {
+      await this.page.goto(this.url);
+    }
   }
 }
