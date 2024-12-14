@@ -2,11 +2,14 @@ import WordPressPageActions from "@pages/common/page-actions/wordpress-actions.p
 import AdminLoginPage from "@pages/wp-admin/login.page";
 import { chromium, FullConfig } from "@playwright/test";
 import fs from "fs";
+import { testData } from "./test-data/data";
+import { woocommerceApi } from "src/utils/wc-api";
+import MyAccountsPage from "@pages/frontend/my-accounts.page";
 
 module.exports = async (config: FullConfig) => {
   const { outputDir } = config.projects[0];
   const { baseURL, storageState } = config.projects[0].use;
-  const { username, password } = process.env;
+  const { CUSTOMER_EMAIL, PASSWORD, ADMIN_EMAIL } = process.env;
 
   console.log(`Base URL: ${baseURL}`);
 
@@ -52,7 +55,7 @@ module.exports = async (config: FullConfig) => {
     try {
       console.log("Attempting to save admin login state on setup...");
       await adminPage.goto("/wp-login.php");
-      await adminLoginPage.enterUsername("admin");
+      await adminLoginPage.enterUsername(ADMIN_EMAIL);
       await adminLoginPage.enterPassword("password");
       await adminLoginPage.clickOnLogin();
       await adminPage.context().storageState({ path: process.env.ADMIN_STATE });
@@ -62,7 +65,7 @@ module.exports = async (config: FullConfig) => {
       console.log(`Saving admin login state failed. Attempt: ${i + 1}/${adminRetries}`);
       console.log(error);
 
-      await adminPage.screenshot({ fullPage: true, path: `${outputDir}/e2e-auth-failed/${i}.png` });
+      await adminPage.screenshot({ fullPage: true, path: `${outputDir}/e2e-auth-failed/admin-login-${i}.png` });
     }
   }
 
@@ -77,7 +80,42 @@ module.exports = async (config: FullConfig) => {
   // set permalink structure to post name
   await pageActions.setPermalinksStructure("Post name");
 
-  // TODO:: disable send password link
+  // create customer
+  const { customer } = testData;
+  await woocommerceApi.create.customer({
+    email: CUSTOMER_EMAIL,
+    first_name: customer.first_name,
+    last_name: customer.last_name,
+    username: customer.username,
+    password: PASSWORD,
+    billing: { ...customer["us"]["billing"] },
+    shipping: { ...customer["us"]["shipping"] }
+  });
 
-  // console.log(process.env.ADMIN_STATE);
+  const customerRetries = 2;
+  const customerContext = await browser.newContext({ baseURL });
+  const customerPage = await customerContext.newPage();
+  const myAccountsPage = new MyAccountsPage(customerPage);
+  for (let i = 0; i < customerRetries; i++) {
+    try {
+      console.log("Attempting to save customer login state on setup...");
+      await myAccountsPage.goto();
+      await myAccountsPage.enterLoginUsername(CUSTOMER_EMAIL);
+      await myAccountsPage.enterLoginPassword(PASSWORD);
+      await customerPage.keyboard.press("Enter");
+      await customerPage.context().storageState({ path: process.env.CUSTOMER_STATE });
+      isCustomerLoggedIn = true;
+      break;
+    } catch (error) {
+      console.log(`Saving customer login state failed. Attempt: ${i + 1}/${customerRetries}`);
+      console.log(error);
+
+      await customerPage.screenshot({ fullPage: true, path: `${outputDir}/e2e-auth-failed/customer-login-${i}.png` });
+    }
+  }
+
+  if (!isCustomerLoggedIn) {
+    console.log(`Cannot proceed with test. Customer user login failed!`);
+    process.exit(1);
+  }
 };

@@ -17,4 +17,8 @@ export default class BasePage {
       await this.page.goto(this.url);
     }
   }
+
+  submit(title: string) {
+    return this.page.locator(`//*[@type="submit"]`).and(this.page.getByText(title));
+  }
 }
