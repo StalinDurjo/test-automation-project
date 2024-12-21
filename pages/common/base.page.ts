@@ -21,4 +21,8 @@ export default class BasePage {
   submit(title: string) {
     return this.page.locator(`//*[@type="submit"]`).and(this.page.getByText(title));
   }
+
+  wpPublish() {
+    return this.page.locator(`#publishing-action`);
+  }
 }

@@ -6,7 +6,8 @@
   "scripts": {
     "test": "npx playwright test",
     "test:ui": "npx playwright test --ui",
-    "wp-env": "wp-env"
+    "wp-env": "wp-env",
+    "test:report": "npx @testiny/cli testrun --confirm --apikey tny_NGd6VB5UFTSHVq8hM94uTHwpQ6kci1mX8SgUg1qWCaZK3vvL --project wc-automation --playwright test-results/testiny.json"
   },
   "keywords": [],
   "author": "",
