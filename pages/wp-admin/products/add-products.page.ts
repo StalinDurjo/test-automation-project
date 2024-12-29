@@ -48,4 +48,9 @@ export default class AddProductsPage extends BasePage {
     await this.page.locator(`#variable_regular_price_${n - 1}`).click();
     await this.page.locator(`#variable_regular_price_${n - 1}`).fill(price);
   }
+
+  async getNthVariationRegularPrice(n: number) {
+    await this.page.getByRole("link", { name: "Edit", exact: true }).nth(1).click();
+    return await this.page.locator(`#variable_regular_price_${n - 1}`).inputValue();
+  }
 }

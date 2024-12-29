@@ -57,7 +57,8 @@ test.describe("Create Product", async () => {
     await page.getByRole("link", { name: "All Products" }).click();
 
     await page.locator(`#post-${postId}`).getByRole("link", { name: "Test Product 1", exact: true }).click();
-    await page.locator(`.product_data_tabs`).getByText("Variations").click();
+    // await page.locator(`.product_data_tabs`).getByText("Variations").click();
+    await addProductsPage.clickOnTab("Variations");
     await page.getByRole("link", { name: "Edit", exact: true }).nth(1).click();
     await expect(page.getByRole("textbox", { name: "Regular price ($)" })).toHaveValue("100");
     await page.getByRole("link", { name: "Edit", exact: true }).nth(2).click();

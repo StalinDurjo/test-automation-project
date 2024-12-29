@@ -26,6 +26,51 @@ const create = {
       // console.log(error);
       return handleError(error);
     }
+  },
+  product: async (payload: unknown) => {
+    try {
+      const response = await api.post(`/wp-json/wc/v3/products`, payload);
+      return response;
+    } catch (error) {
+      // console.log(error);
+      return handleError(error);
+    }
+  },
+  productVariation: async (payload: unknown) => {
+    try {
+      const response = await api.post(`/wp-json/wc/v3/products/${payload["product_id"]}/variations`, payload);
+      return response;
+    } catch (error) {
+      // console.log(error);
+      return handleError(error);
+    }
+  },
+  updateProductVariation: async (payload: unknown) => {
+    try {
+      const response = await api.put(`/wp-json/wc/v3/products/${payload["product_id"]}/variations/${payload["variation_id"]}`, payload);
+      return response;
+    } catch (error) {
+      // console.log(error);
+      return handleError(error);
+    }
+  },
+  attribute: async (payload: unknown) => {
+    try {
+      const response = await api.post(`/wp-json/wc/v3/products/attributes`, payload);
+      return response;
+    } catch (error) {
+      // console.log(error);
+      return handleError(error);
+    }
+  },
+  attributeTerm: async (payload: unknown) => {
+    try {
+      const response = await api.post(`/wp-json/wc/v3/products/attributes/${payload["attribute_id"]}/terms`, payload);
+      return response;
+    } catch (error) {
+      // console.log(error);
+      return handleError(error);
+    }
   }
 };
 // Update methods
